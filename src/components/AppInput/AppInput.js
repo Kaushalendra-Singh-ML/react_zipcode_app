@@ -10,13 +10,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Inputs() {
+// Can convert into generic component for input fields.
+export default function Inputs(props) {
   const classes = useStyles();
+
+  const handleChange = (event) => {
+    props.setZipcode(event.target.value);
+  };
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <Input
-        placeholder="Placeholder"
+        placeholder="Zipcode"
+        onChange={handleChange}
+        value={props.zipcode}
         inputProps={{ "aria-label": "description" }}
       />
     </form>

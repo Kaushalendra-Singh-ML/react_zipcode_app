@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Generic Component for dropdown.
 export default function SimpleSelect(props) {
   const classes = useStyles();
-  const [country, setCountry] = React.useState("");
 
   const handleChange = (event) => {
-    setCountry(event.target.value);
+    props.setCountry(event.target.value);
   };
 
   return (
@@ -31,7 +31,7 @@ export default function SimpleSelect(props) {
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
-          value={country}
+          value={props.country}
           onChange={handleChange}
           label="Country"
         >
