@@ -3,6 +3,7 @@ import AppDropdown from "../../components/AppDropdown/AppDropdown";
 import AppInput from "../../components/AppInput/AppInput";
 import AppSubmit from "../../components/AppSubmit/AppSubmit";
 import AppTable from "../../components/AppTable/AppTable";
+import { HeaderBackground } from "../../styles/zipcode.styled";
 const static_URL = "https://api.zippopotam.us";
 
 // Static Menu data of countries.
@@ -29,6 +30,29 @@ const static_menu = [
   },
 ];
 
+const staticLabel = [
+  {
+    label: "Country",
+    value: "name",
+  },
+  {
+    label: "Country Abbreviation",
+    value: "abbrevation",
+  },
+  {
+    label: "Places",
+    value: "places",
+  },
+  {
+    label: "Latitude",
+    value: "latitude",
+  },
+  {
+    label: "Longitude",
+    value: "longitude",
+  },
+];
+
 export default function HomeScreen() {
   const [zipcode, setZipcode] = useState("");
   const [country, setCountry] = useState("");
@@ -43,21 +67,44 @@ export default function HomeScreen() {
       });
   };
 
+  function createData(name, abbrevation, places, latitude, longitude) {
+    return { name, abbrevation, places, latitude, longitude };
+  }
+
   // handle zipcode data for sending it to table component.
   const handleZipcodeDetail = () => {
-    console.log(zipcodeDetail);
+    let rows;
+    if (Object.keys(zipcodeDetail).length) {
+      rows = zipcodeDetail.places.map((data) => {
+        return {
+          name: zipcodeDetail.country,
+          abbrevation: zipcodeDetail["country abbreviation"],
+          places: data["place name"],
+          latitude: data.latitude,
+          longitude: data.longitude,
+        };
+      });
+    }
+    return rows;
   };
 
   return (
     <>
-      <AppDropdown
-        setCountry={setCountry}
-        country={country}
-        static_menu={static_menu}
-      />
-      <AppInput zipcode={zipcode} setZipcode={setZipcode} />
-      <AppSubmit handleSubmit={handleSubmit} />
-      <AppTable handleZipcodeDetail={handleZipcodeDetail} />
+      <HeaderBackground>
+        <AppDropdown
+          setCountry={setCountry}
+          data={country}
+          static_menu={static_menu}
+          label="Country"
+        />
+        <AppInput
+          data={zipcode}
+          setZipcode={setZipcode}
+          placeholder="Zipcode"
+        />
+        <AppSubmit handleSubmit={handleSubmit} />
+        <AppTable data={handleZipcodeDetail()} label={staticLabel} />
+      </HeaderBackground>
     </>
   );
 }

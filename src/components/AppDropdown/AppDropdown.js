@@ -5,6 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { SetHeader } from "../../styles/zipcode.styled";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -25,21 +26,29 @@ export default function SimpleSelect(props) {
   };
 
   return (
-    <div>
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">country</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={props.country}
-          onChange={handleChange}
-          label="Country"
-        >
-          {props.static_menu.map((res) => {
-            return <MenuItem value={res.value}> {res.label} </MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-    </div>
+    <SetHeader>
+      <div>
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="demo-simple-select-outlined-label">
+            country
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            value={props.data}
+            onChange={handleChange}
+            label={props.label}
+          >
+            {props.static_menu.map((res) => {
+              return (
+                <MenuItem key={res.value.toString()} value={res.value}>
+                  {res.label}{" "}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </div>
+    </SetHeader>
   );
 }
