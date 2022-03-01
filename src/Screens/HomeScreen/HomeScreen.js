@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppDropdown from "../../components/AppDropdown/AppDropdown";
 import AppInput from "../../components/AppInput/AppInput";
+import AppLoader from "../../components/AppLoader/appLoader";
 import AppSubmit from "../../components/AppSubmit/AppSubmit";
 import AppTable from "../../components/AppTable/AppTable";
 import { HeaderBackground } from "../../styles/zipcode.styled";
@@ -57,23 +58,22 @@ export default function HomeScreen() {
   const [zipcode, setZipcode] = useState("");
   const [country, setCountry] = useState("");
   const [zipcodeDetail, setZipcodeDetail] = useState({});
+  const [showLoader, setShowLoader] = useState(false);
 
   // Getting data after submitting country and zipcode.
   const handleSubmit = () => {
+    setShowLoader(true);
     fetch(`${static_URL}/${country}/${zipcode}`)
       .then((res) => res.json())
       .then((response) => {
         setZipcodeDetail(response);
+        setShowLoader(false);
       });
   };
 
-  function createData(name, abbrevation, places, latitude, longitude) {
-    return { name, abbrevation, places, latitude, longitude };
-  }
-
   // handle zipcode data for sending it to table component.
   const handleZipcodeDetail = () => {
-    let rows;
+    let rows = {};
     if (Object.keys(zipcodeDetail).length) {
       rows = zipcodeDetail.places.map((data) => {
         return {
@@ -101,8 +101,11 @@ export default function HomeScreen() {
           data={zipcode}
           setZipcode={setZipcode}
           placeholder="Zipcode"
+          type="number"
+          labelName="Please Enter Zipcode"
         />
         <AppSubmit handleSubmit={handleSubmit} />
+        <AppLoader loading={showLoader} />
         <AppTable data={handleZipcodeDetail()} label={staticLabel} />
       </HeaderBackground>
     </>

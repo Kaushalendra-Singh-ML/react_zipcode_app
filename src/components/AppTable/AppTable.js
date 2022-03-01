@@ -28,13 +28,17 @@ export default function BasicTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.data.map((row) => (
-            <TableRow key={row.places}>
-              {props.label.map((res) => {
-                return <TableCell align="right">{row[res.value]}</TableCell>;
-              })}
-            </TableRow>
-          ))}
+          {Object.keys(props.data).length ? (
+            props.data.map((row) => (
+              <TableRow key={row.places}>
+                {props.label.map((res) => {
+                  return <TableCell align="right">{row[res.value]}</TableCell>;
+                })}
+              </TableRow>
+            ))
+          ) : (
+            <TableCell align="center">No Data</TableCell>
+          )}
         </TableBody>
       </Table>
     </TableContainer>
