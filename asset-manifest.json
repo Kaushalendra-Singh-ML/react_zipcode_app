@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react_zipcode_app/static/css/main.e6c13ad2.css",
+    "main.js": "/react_zipcode_app/static/js/main.18fc009f.js",
+    "static/js/787.28cb0dcd.chunk.js": "/react_zipcode_app/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/react_zipcode_app/index.html",
+    "main.e6c13ad2.css.map": "/react_zipcode_app/static/css/main.e6c13ad2.css.map",
+    "main.18fc009f.js.map": "/react_zipcode_app/static/js/main.18fc009f.js.map",
+    "787.28cb0dcd.chunk.js.map": "/react_zipcode_app/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.18fc009f.js"
+  ]
+}
