@@ -11,19 +11,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-// Can convert into generic component for input fields.
+// Generic Component for Input Fields.
 export default function Inputs(props) {
   const classes = useStyles();
 
-  const [errorText, setErrorText] = useState("");
-
   const handleChange = (event) => {
     props.setZipcode(event.target.value);
-    if (event.target.value.match(/^(\d{4}|\d{6})$/)) {
-      setErrorText("");
-    } else {
-      setErrorText("Invalid format: ###-###-####");
-    }
   };
 
   return (
@@ -33,9 +26,11 @@ export default function Inputs(props) {
           <TextField
             type={props.type}
             onChange={handleChange}
-            placeholder={props.Zipcode}
+            placeholder={props.placeholder}
             id={props.data.toString()}
-            errorText={errorText}
+            helperText={props.errorMsg}
+            error={props.error}
+            required={true}
             label={props.labelName}
           />
         }

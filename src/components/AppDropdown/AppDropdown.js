@@ -38,6 +38,7 @@ export default function SimpleSelect(props) {
             value={props.data}
             onChange={handleChange}
             label={props.label}
+            error={props.error}
           >
             {props.static_menu.map((res) => {
               return (

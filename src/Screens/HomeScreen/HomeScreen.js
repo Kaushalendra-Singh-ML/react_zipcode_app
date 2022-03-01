@@ -59,18 +59,42 @@ export default function HomeScreen() {
   const [country, setCountry] = useState("");
   const [zipcodeDetail, setZipcodeDetail] = useState({});
   const [showLoader, setShowLoader] = useState(false);
+  const [error, setError] = useState(false);
+  const [countryError, setCountryError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Getting data after submitting country and zipcode.
   const handleSubmit = () => {
     setShowLoader(true);
-    fetch(`${static_URL}/${country}/${zipcode}`)
-      .then((res) => res.json())
-      .then((response) => {
-        setZipcodeDetail(response);
-        setShowLoader(false);
-      });
+    if (checkError()) {
+      fetch(`${static_URL}/${country}/${zipcode}`)
+        .then((res) => res.json())
+        .then((response) => {
+          setZipcodeDetail(response);
+          setShowLoader(false);
+        });
+    } else {
+      setShowLoader(false);
+    }
   };
 
+  const checkError = () => {
+    if (zipcode.match(/^(\d{4}|\d{6})$/)) {
+      setError(false);
+      setErrorMsg("");
+      if (country) {
+        setCountryError(false);
+        return true;
+      } else {
+        setCountryError(true);
+        return false;
+      }
+    } else {
+      setError(true);
+      setErrorMsg("Please Enter Valid Zipcode");
+      return false;
+    }
+  };
   // handle zipcode data for sending it to table component.
   const handleZipcodeDetail = () => {
     let rows = {};
@@ -96,12 +120,15 @@ export default function HomeScreen() {
           data={country}
           static_menu={static_menu}
           label="Country"
+          error={countryError}
         />
         <AppInput
           data={zipcode}
           setZipcode={setZipcode}
           placeholder="Zipcode"
           type="number"
+          error={error}
+          errorMsg={errorMsg}
           labelName="Please Enter Zipcode"
         />
         <AppSubmit handleSubmit={handleSubmit} />
